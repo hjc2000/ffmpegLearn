@@ -14,6 +14,7 @@ namespace FFmpeg
 		~AVPacket();
 		void RescaleTsFor(shared_ptr<FFmpeg::AVStream> dstStream);
 		void UnRef(void);
+		friend class AVFormatContext;
 
 		// 访问器
 	public:
@@ -23,7 +24,6 @@ namespace FFmpeg
 		int64_t get_Dts(void);
 		void set_Dts(int64_t dts);
 		void set_AffStreamIndex(int index);
-		void AdjustStartPtsAndDts(void);
 
 	private:
 		::AVPacket _pkt;
@@ -31,6 +31,7 @@ namespace FFmpeg
 
 		// 私有方法
 	private:
+		void AdjustStartPtsAndDts(void);
 	};
 
 }

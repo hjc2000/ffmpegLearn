@@ -67,10 +67,11 @@ void FFmpeg::AVPacket::set_Dts(int64_t dts)
 }
 
 /**
- * @brief 每个包诞生的时候都看看，如果自己是流中的第一个包，则将流的
+ * @brief 在调用 av_read_frame 后看看，如果自己是流中的第一个包，则将流的
  * 起始 dts 和 pts 设置为自己的 dts, pts。然后将自己的 pts 和 dts
  * 设置为 0，如果自己不是第一个包则将调整自己的 dts 和 pts
  *
+ * 此方法是私有的，只让友元类 AVFormatContext 使用
  */
 void FFmpeg::AVPacket::AdjustStartPtsAndDts(void)
 {
