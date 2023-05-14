@@ -36,7 +36,7 @@ void FFmpeg::AVStream::CopyParamTo(shared_ptr<FFmpeg::AVStream> dstStream)
 	return _baseObj->codecpar->codec_type;
 }
 
-int FFmpeg::AVStream::get_Index(void)
+int FFmpeg::AVStream::get_StreamIndex(void)
 {
 	return _baseObj->index;
 }
@@ -47,7 +47,7 @@ int FFmpeg::AVStream::get_Index(void)
  *
  * @return int
  */
-int FFmpeg::AVStream::get_DstIndex(void)
+int FFmpeg::AVStream::get_DstStreamIndex(void)
 {
 	return _dstStreamIndex;
 }
@@ -58,7 +58,7 @@ int FFmpeg::AVStream::get_DstIndex(void)
  *
  * @param dstIndex
  */
-void FFmpeg::AVStream::set_DstIndex(int dstIndex)
+void FFmpeg::AVStream::set_DstStreamIndex(int dstIndex)
 {
 	_dstStreamIndex = dstIndex;
 }

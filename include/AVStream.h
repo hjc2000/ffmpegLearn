@@ -18,9 +18,9 @@ namespace FFmpeg
 		// 属性访问器
 	public:
 		::AVMediaType get_MediaType(void);
-		int get_Index(void);
-		int get_DstIndex(void);
-		void set_DstIndex(int dstIndex);
+		int get_StreamIndex(void);
+		int get_DstStreamIndex(void);
+		void set_DstStreamIndex(int dstIndex);
 		int64_t get_StartDts(void);
 		void set_StartDts(int64_t value);
 		int64_t get_StartPts(void);

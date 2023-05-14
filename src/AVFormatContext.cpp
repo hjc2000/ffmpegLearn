@@ -231,13 +231,13 @@ void FFmpeg::AVFormatContext::CopyStreamTo(AVFormatContext &dstFormat, double en
 	// 复制头部信息
 	for (std::shared_ptr<FFmpeg::AVStream> stream : get_StreamList())
 	{
-		if (stream->get_DstIndex() < 0)
+		if (stream->get_DstStreamIndex() < 0)
 		{
 			continue;
 		}
 		else
 		{
-			stream->CopyParamTo(dstFormat.GetStream(stream->get_DstIndex()));
+			stream->CopyParamTo(dstFormat.GetStream(stream->get_DstStreamIndex()));
 		}
 	}
 	dstFormat.WriteHeader();
@@ -253,7 +253,7 @@ void FFmpeg::AVFormatContext::CopyStreamTo(AVFormatContext &dstFormat, double en
 			cout << "提前结束" << endl;
 			break;
 		}
-		int dstStreamIndex = affStream->get_DstIndex();
+		int dstStreamIndex = affStream->get_DstStreamIndex();
 		if (dstStreamIndex < 0)
 		{
 			continue;
