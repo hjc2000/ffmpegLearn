@@ -12,7 +12,7 @@ int main(void)
 		auto streams = inputFormat.get_StreamList();
 		streams[0]->set_DstIndex(1);
 		streams[1]->set_DstIndex(0);
-		// inputFormat.SeekFrame(100);
+		inputFormat.SeekFrame(100);
 		inputFormat.CopyStreamTo(outputFormat);
 	}
 	catch (int errCode)
