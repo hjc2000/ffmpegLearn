@@ -3,13 +3,13 @@
 
 namespace FFmpeg
 {
-	class Format;
+	class AVFormatContext;
 
 	class AVStream : public Wrapper<::AVStream>
 	{
 		// 生命周期
 	public:
-		AVStream(::AVStream *stream, Format *format);
+		AVStream(::AVStream *stream, AVFormatContext *format);
 
 		// 公共方法
 	public:
@@ -25,11 +25,11 @@ namespace FFmpeg
 		void set_StartDts(int64_t value);
 		int64_t get_StartPts(void);
 		void set_StartPts(int64_t value);
-		FFmpeg::Format *const get_AffFormat(void);
+		FFmpeg::AVFormatContext *const get_AffFormat(void);
 
 		// 私有字段
 	private:
-		FFmpeg::Format *_affFormat = nullptr;
+		FFmpeg::AVFormatContext *_affFormat = nullptr;
 		int _dstIndex = -1;
 		int64_t _startDts = -1;
 		int64_t _startPts = -1;

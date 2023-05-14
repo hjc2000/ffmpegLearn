@@ -1,15 +1,15 @@
-#include <Format.h>
+#include <AVFormatContext.h>
 #include <AVPacket.h>
 #include <AVStream.h>
 #include <iostream>
 
 /**
- * @brief Construct a new FFmpeg::Format::Format object
+ * @brief Construct a new FFmpeg::AVFormatContext::AVFormatContext object
  *
  * @param url
  * @param mode
  */
-FFmpeg::Format::Format(char const *url, FormatMode mode)
+FFmpeg::AVFormatContext::AVFormatContext(char const *url, FormatMode mode)
 {
 	// 尝试打开文件
 	switch (mode)
@@ -31,10 +31,10 @@ FFmpeg::Format::Format(char const *url, FormatMode mode)
 }
 
 /**
- * @brief Destroy the FFmpeg::Format::Format object
+ * @brief Destroy the FFmpeg::AVFormatContext::AVFormatContext object
  *
  */
-FFmpeg::Format::~Format()
+FFmpeg::AVFormatContext::~AVFormatContext()
 {
 	if (_baseObj)
 	{
@@ -44,24 +44,24 @@ FFmpeg::Format::~Format()
 }
 
 /**
- * @brief 创建一个空的 Format 用来进行输出。相当于创建新文件。
- * 创建完成后还会为这个 Format 打开 IO
+ * @brief 创建一个空的 AVFormatContext 用来进行输出。相当于创建新文件。
+ * 创建完成后还会为这个 AVFormatContext 打开 IO
  *
  * @param url
  */
-void FFmpeg::Format::CreateOutputFormat(char const *url)
+void FFmpeg::AVFormatContext::CreateOutputFormat(char const *url)
 {
 	// 为上下文分配资源
 	int result = avformat_alloc_output_context2(&_baseObj, NULL, NULL, url);
 	if (result < 0)
 		throw result;
-	// 为这个新创建的 Format 打开 IO
+	// 为这个新创建的 AVFormatContext 打开 IO
 	result = avio_open2(&_baseObj->pb, url, AVIO_FLAG_READ_WRITE, NULL, NULL);
 	if (result < 0)
 		throw result;
 }
 
-void FFmpeg::Format::InitStreamVector(void)
+void FFmpeg::AVFormatContext::InitStreamVector(void)
 {
 	int numOfStream = get_NumOfStream();
 	for (int i = 0; i < numOfStream; i++)
@@ -71,7 +71,7 @@ void FFmpeg::Format::InitStreamVector(void)
 	}
 }
 
-shared_ptr<FFmpeg::AVStream> FFmpeg::Format::GetBestStream(AVMediaType type)
+shared_ptr<FFmpeg::AVStream> FFmpeg::AVFormatContext::GetBestStream(AVMediaType type)
 {
 	int streamIndex = av_find_best_stream(_baseObj, type, -1, -1, NULL, 0);
 	if (streamIndex < 0)
@@ -91,7 +91,7 @@ shared_ptr<FFmpeg::AVStream> FFmpeg::Format::GetBestStream(AVMediaType type)
  * @param streamIndex
  * @return shared_ptr<FFmpeg::AVStream>
  */
-shared_ptr<FFmpeg::AVStream> FFmpeg::Format::GetStream(int streamIndex)
+shared_ptr<FFmpeg::AVStream> FFmpeg::AVFormatContext::GetStream(int streamIndex)
 {
 	if (streamIndex < 0 || streamIndex >= get_NumOfStream())
 	{
@@ -106,7 +106,7 @@ shared_ptr<FFmpeg::AVStream> FFmpeg::Format::GetStream(int streamIndex)
  *
  * @param numOfStream 要创建的流的个数
  */
-void FFmpeg::Format::CreateNewStream(int numOfStream)
+void FFmpeg::AVFormatContext::CreateNewStream(int numOfStream)
 {
 	if (_streams.size())
 	{
@@ -130,7 +130,7 @@ void FFmpeg::Format::CreateNewStream(int numOfStream)
  * 导致输出的文件大小为 0kB。
  *
  */
-void FFmpeg::Format::WriteHeader(void)
+void FFmpeg::AVFormatContext::WriteHeader(void)
 {
 	int result = avformat_write_header(_baseObj, NULL);
 	if (result < 0)
@@ -141,7 +141,7 @@ void FFmpeg::Format::WriteHeader(void)
  * @brief 向封装写入尾部信息
  *
  */
-void FFmpeg::Format::WriteTrailer(void)
+void FFmpeg::AVFormatContext::WriteTrailer(void)
 {
 	int result = av_write_trailer(_baseObj);
 	if (result < 0)
@@ -153,7 +153,7 @@ void FFmpeg::Format::WriteTrailer(void)
  *
  * @param pkt
  */
-void FFmpeg::Format::Interleaved_Write_Frame(shared_ptr<FFmpeg::AVPacket> pkt)
+void FFmpeg::AVFormatContext::Interleaved_Write_Frame(shared_ptr<FFmpeg::AVPacket> pkt)
 {
 	pkt->get_Base()->pos = -1;
 	int result = av_interleaved_write_frame(_baseObj, pkt->get_Base());
@@ -167,7 +167,7 @@ void FFmpeg::Format::Interleaved_Write_Frame(shared_ptr<FFmpeg::AVPacket> pkt)
  * @return shared_ptr<FFmpeg::AVPacket> 如果失败或读到尽头会返回
  * 空指针
  */
-shared_ptr<FFmpeg::AVPacket> FFmpeg::Format::ReadFrame()
+shared_ptr<FFmpeg::AVPacket> FFmpeg::AVFormatContext::ReadFrame()
 {
 	shared_ptr<FFmpeg::AVPacket> pkt = make_shared<FFmpeg::AVPacket>(this);
 	int result = av_read_frame(_baseObj, pkt->get_Base());
@@ -182,7 +182,7 @@ shared_ptr<FFmpeg::AVPacket> FFmpeg::Format::ReadFrame()
 	}
 }
 
-void FFmpeg::Format::SeekFrame(double dstTime)
+void FFmpeg::AVFormatContext::SeekFrame(double dstTime)
 {
 	int result = av_seek_frame(_baseObj, -1, dstTime * AV_TIME_BASE, AVSEEK_FLAG_BACKWARD);
 	if (result < 0)
@@ -194,7 +194,7 @@ void FFmpeg::Format::SeekFrame(double dstTime)
  *
  * @param dstFormat 要复制到的封装
  */
-void FFmpeg::Format::CopyAllStreamTo(Format &dstFormat)
+void FFmpeg::AVFormatContext::CopyAllStreamTo(AVFormatContext &dstFormat)
 {
 	// 复制头部信息
 	for (int i = 0; i < get_NumOfStream(); i++)
@@ -226,7 +226,7 @@ void FFmpeg::Format::CopyAllStreamTo(Format &dstFormat)
  * 个数一样，否则会出现超出数组边界的访问
  * @param endtime 结束时间，单位 s
  */
-void FFmpeg::Format::CopyStreamTo(Format &dstFormat, double endtime)
+void FFmpeg::AVFormatContext::CopyStreamTo(AVFormatContext &dstFormat, double endtime)
 {
 	// 复制头部信息
 	for (std::shared_ptr<FFmpeg::AVStream> stream : get_StreamList())
@@ -273,12 +273,12 @@ void FFmpeg::Format::CopyStreamTo(Format &dstFormat, double endtime)
  *
  * @return int 流的个数
  */
-int FFmpeg::Format::get_NumOfStream(void)
+int FFmpeg::AVFormatContext::get_NumOfStream(void)
 {
 	return _baseObj->nb_streams;
 }
 
-vector<shared_ptr<FFmpeg::AVStream>> &FFmpeg::Format::get_StreamList(void)
+vector<shared_ptr<FFmpeg::AVStream>> &FFmpeg::AVFormatContext::get_StreamList(void)
 {
 	return _streams;
 }

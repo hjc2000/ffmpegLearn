@@ -6,13 +6,13 @@ int main(void)
 {
 	try
 	{
-		Format inputFormat = Format("./in1.mp4", FFmpeg::FormatMode::Open);
-		Format outputFormat = Format("./out.ts", FFmpeg::FormatMode::Create);
+		FFmpeg::AVFormatContext inputFormat = FFmpeg::AVFormatContext("./in1.mp4", FFmpeg::FormatMode::Open);
+		FFmpeg::AVFormatContext outputFormat = FFmpeg::AVFormatContext("./out.ts", FFmpeg::FormatMode::Create);
 		outputFormat.CreateNewStream(2);
 		auto streams = inputFormat.get_StreamList();
 		streams[0]->set_DstIndex(0);
 		streams[1]->set_DstIndex(1);
-		// inputFormat.SeekFrame(100);
+		inputFormat.SeekFrame(100);
 		inputFormat.CopyStreamTo(outputFormat, 120);
 	}
 	catch (int errCode)

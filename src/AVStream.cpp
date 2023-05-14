@@ -1,6 +1,6 @@
 #include <AVStream.h>
 #include <AVPacket.h>
-#include <Format.h>
+#include <AVFormatContext.h>
 
 /**
  * @brief Construct a new FFmpeg::AVStream::AVStream object
@@ -8,7 +8,7 @@
  * @param stream
  * @param format
  */
-FFmpeg::AVStream::AVStream(::AVStream *stream, Format *format)
+FFmpeg::AVStream::AVStream(::AVStream *stream, AVFormatContext *format)
 {
 	_baseObj = stream;
 	_affFormat = format;
@@ -86,9 +86,9 @@ void FFmpeg::AVStream::set_StartPts(int64_t value)
 /**
  * @brief 获取此流所附属于的封装
  *
- * @return FFmpeg::Format* const
+ * @return FFmpeg::AVFormatContext* const
  */
-FFmpeg::Format *const FFmpeg::AVStream::get_AffFormat(void)
+FFmpeg::AVFormatContext *const FFmpeg::AVStream::get_AffFormat(void)
 {
 	return _affFormat;
 }

@@ -13,11 +13,11 @@ namespace FFmpeg
 		Create,
 	};
 
-	class Format : public Wrapper<::AVFormatContext>
+	class AVFormatContext : public Wrapper<::AVFormatContext>
 	{
 	public: // 生命周期
-		Format(char const *url, FormatMode mode);
-		~Format();
+		AVFormatContext(char const *url, FormatMode mode);
+		~AVFormatContext();
 
 	public: // 公共方法
 		shared_ptr<FFmpeg::AVStream> GetBestStream(AVMediaType type);
@@ -28,8 +28,8 @@ namespace FFmpeg
 		void Interleaved_Write_Frame(shared_ptr<FFmpeg::AVPacket> pkt);
 		shared_ptr<FFmpeg::AVPacket> ReadFrame();
 		void SeekFrame(double dstTime);
-		void CopyAllStreamTo(Format &dstFormat);
-		void CopyStreamTo(Format &dstFormat, double endtime);
+		void CopyAllStreamTo(AVFormatContext &dstFormat);
+		void CopyStreamTo(AVFormatContext &dstFormat, double endtime);
 
 	public: // 属性访问器
 		int get_NumOfStream(void);

@@ -8,6 +8,8 @@ extern "C"
 #include <libavutil/avutil.h>
 #include <libavformat/avio.h>
 #include <libavformat/avformat.h>
+#include <libavcodec/avcodec.h>
+#include <libavutil/opt.h>
 }
 #include <memory>
 #include <Wrapper.h>

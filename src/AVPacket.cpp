@@ -1,13 +1,13 @@
 #include <AVPacket.h>
 #include <AVStream.h>
-#include <Format.h>
+#include <AVFormatContext.h>
 
 /**
  * @brief Construct a new FFmpeg::AVPacket::AVPacket object
  *
  * @param affiliatedStream 此包所属的流
  */
-FFmpeg::AVPacket::AVPacket(Format *affFormat)
+FFmpeg::AVPacket::AVPacket(AVFormatContext *affFormat)
 {
 	_baseObj = &_pkt;
 	_affFormat = affFormat;

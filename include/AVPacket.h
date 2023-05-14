@@ -5,12 +5,12 @@ using namespace std;
 namespace FFmpeg
 {
 	class AVStream;
-	class Format;
+	class AVFormatContext;
 
 	class AVPacket : public Wrapper<::AVPacket>
 	{
 	public:
-		AVPacket(Format *affFormat);
+		AVPacket(AVFormatContext *affFormat);
 		~AVPacket();
 		void RescaleTsFor(shared_ptr<FFmpeg::AVStream> dstStream);
 		void UnRef(void);
@@ -27,7 +27,7 @@ namespace FFmpeg
 
 	private:
 		::AVPacket _pkt;
-		Format *_affFormat = nullptr;
+		AVFormatContext *_affFormat = nullptr;
 
 		// 私有方法
 	private:
