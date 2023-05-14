@@ -14,4 +14,5 @@ extern "C"
 #include <memory>
 #include <Wrapper.h>
 #include <stdint.h>
+#include <iostream>
 using namespace std;
