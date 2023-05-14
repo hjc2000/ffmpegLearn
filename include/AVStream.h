@@ -30,7 +30,7 @@ namespace FFmpeg
 		// 私有字段
 	private:
 		FFmpeg::AVFormatContext *_affFormat = nullptr;
-		int _dstIndex = -1;
+		int _dstStreamIndex = -1;
 		int64_t _startDts = -1;
 		int64_t _startPts = -1;
 	};

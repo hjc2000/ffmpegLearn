@@ -49,7 +49,7 @@ int FFmpeg::AVStream::get_Index(void)
  */
 int FFmpeg::AVStream::get_DstIndex(void)
 {
-	return _dstIndex;
+	return _dstStreamIndex;
 }
 
 /**
@@ -60,7 +60,7 @@ int FFmpeg::AVStream::get_DstIndex(void)
  */
 void FFmpeg::AVStream::set_DstIndex(int dstIndex)
 {
-	_dstIndex = dstIndex;
+	_dstStreamIndex = dstIndex;
 }
 
 int64_t FFmpeg::AVStream::get_StartDts(void)
