@@ -224,8 +224,9 @@ void FFmpeg::Format::CopyAllStreamTo(Format &dstFormat)
  * @param dstFormat 要复制到的封装
  * @param streamMap map 数组的头指针。数组元素的个数要与本封装中流的
  * 个数一样，否则会出现超出数组边界的访问
+ * @param endtime 结束时间，单位 s
  */
-void FFmpeg::Format::CopyStreamTo(Format &dstFormat)
+void FFmpeg::Format::CopyStreamTo(Format &dstFormat, double endtime)
 {
 	// 复制头部信息
 	for (std::shared_ptr<FFmpeg::AVStream> stream : get_StreamList())
@@ -246,7 +247,13 @@ void FFmpeg::Format::CopyStreamTo(Format &dstFormat)
 	while ((pkt = ReadFrame()))
 	{
 		int sourceStreamIndex = pkt->get_AffStreamIndex();
-		int dstStreamIndex = GetStream(sourceStreamIndex)->get_DstIndex();
+		std::shared_ptr<FFmpeg::AVStream> affStream = GetStream(sourceStreamIndex);
+		if (av_q2d(affStream->get_Base()->time_base) * pkt->get_Pts() > endtime)
+		{
+			cout << "提前结束" << endl;
+			break;
+		}
+		int dstStreamIndex = affStream->get_DstIndex();
 		if (dstStreamIndex < 0)
 		{
 			continue;

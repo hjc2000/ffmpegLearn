@@ -29,7 +29,7 @@ namespace FFmpeg
 		shared_ptr<FFmpeg::AVPacket> ReadFrame();
 		void SeekFrame(double dstTime);
 		void CopyAllStreamTo(Format &dstFormat);
-		void CopyStreamTo(Format &dstFormat);
+		void CopyStreamTo(Format &dstFormat, double endtime);
 
 	public: // 属性访问器
 		int get_NumOfStream(void);
