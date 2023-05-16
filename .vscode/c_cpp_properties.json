@@ -4,7 +4,7 @@
 			"name": "Win32",
 			"includePath": [
 				"${workspaceFolder}/**",
-				"${HOME}ffmpeg_build/include"
+				"${HOME}/ffmpeg_build/include"
 			],
 			"defines": [
 				"_DEBUG",
