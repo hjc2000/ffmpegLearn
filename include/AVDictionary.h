@@ -80,7 +80,7 @@ namespace FFmpeg
 		 * @param flags
 		 * @return FFmpeg::AVDictionaryEntry*
 		 */
-		FFmpeg::AVDictionaryEntry *av_dict_get(const char *key, const FFmpeg::AVDictionaryEntry *previous_entry, FFmpeg::AVDictionaryFlag flags = AVDictionaryFlag::none)
+		AVDictionaryEntry *av_dict_get(const char *key, const AVDictionaryEntry *previous_entry, AVDictionaryFlag flags = AVDictionaryFlag::none)
 		{
 			return ::av_dict_get(m_dic, key, previous_entry, flags);
 		}

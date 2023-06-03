@@ -75,7 +75,8 @@
 			"thread": "cpp",
 			"cinttypes": "cpp",
 			"typeinfo": "cpp",
-			"variant": "cpp"
+			"variant": "cpp",
+			"fstream": "cpp"
 		},
 		"editor.minimap.showSlider": "always",
 		"editor.minimap.size": "fill",
