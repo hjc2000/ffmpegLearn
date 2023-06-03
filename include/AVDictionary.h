@@ -48,16 +48,38 @@ namespace FFmpeg
 
 #pragma region 对 ::AVDictionary 的实现
 	public:
+		/**
+		 * @brief 获取字典中记录的条数
+		 *
+		 * @return int
+		 */
 		inline int av_dict_count()
 		{
 			return ::av_dict_count(m_dic);
 		}
 
+		/**
+		 * @brief 向字典中写一条记录
+		 *
+		 * @param key
+		 * @param value
+		 * @param flags
+		 * @return int
+		 */
 		inline int av_dict_set(const char *key, const char *value, AVDictionaryFlag flags = AVDictionaryFlag::none)
 		{
 			return ::av_dict_set(&m_dic, key, value, flags);
 		}
 
+		/**
+		 * @brief 获取字典中的记录
+		 *
+		 * @param key
+		 * @param previous_entry 指定上一条记录，如果指定，则从这里开始往后查找，
+		 * 如果传入 nullprt 则从头开始查找
+		 * @param flags
+		 * @return FFmpeg::AVDictionaryEntry*
+		 */
 		FFmpeg::AVDictionaryEntry *av_dict_get(const char *key, const FFmpeg::AVDictionaryEntry *previous_entry, FFmpeg::AVDictionaryFlag flags = AVDictionaryFlag::none)
 		{
 			return ::av_dict_get(m_dic, key, previous_entry, flags);
