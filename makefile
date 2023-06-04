@@ -1,5 +1,5 @@
 # 指定编译器
-CXX=g++
+CXX = g++
 # 指定编译器选项
 EX_CXXFLAGS = -g -Wall -I./include
 # 指定链接最终目标文件时的额外链接选项
@@ -7,8 +7,8 @@ ex_final_link_flags = #-shared
 # 指定要链接的库
 used_libs = "libavutil libavformat libavcodec libavdevice libswresample"
 # 通过 pkg-config 获取包的头文件、库对应的 gcc 选项
-PKG_CONFIG_CFLAGS=$(shell pkg-config -cflags $(used_libs))
-PKG_CONFIG_LIBS=$(shell pkg-config -libs $(used_libs))
+PKG_CONFIG_CFLAGS = $(shell pkg-config -cflags $(used_libs))
+PKG_CONFIG_LIBS = $(shell pkg-config -libs $(used_libs))
 # 设置最终生成的可执行文件的文件名
 TARGET = test.exe
 # 需要编译的源文件
