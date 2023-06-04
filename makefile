@@ -1,14 +1,16 @@
 # 指定编译器
 CXX=g++
 # 指定编译器选项
-EX_CXXFLAGS=-g -Wall -I./include
+EX_CXXFLAGS = -g -Wall -I./include
+# 指定链接最终目标文件时的额外链接选项
+ex_final_link_flags = -shared
 # 指定要链接的库
 USED_LIBS="libavutil libavformat libavcodec libavdevice libswresample"
 # 通过 pkg-config 获取包的头文件、库对应的 gcc 选项
 PKG_CONFIG_CFLAGS=$(shell pkg-config -cflags $(USED_LIBS))
 PKG_CONFIG_LIBS=$(shell pkg-config -libs $(USED_LIBS))
 # 设置最终生成的可执行文件的文件名
-TARGET=test.exe
+TARGET=test.dll
 # 需要编译的源文件
 # 使用 wildcard 函数，查找当前目录下的所有 cpp 文件，将文件名储存到变量
 # SRC 中。变量 SRC 相当于一个数组，本质是一个字符串，数组各个元素用空格
@@ -28,7 +30,7 @@ OBJS = $(OBJ) $(OBJ1)
 # 最终目标
 $(TARGET):$(OBJS)
 	@echo "link $^ --> $@"
-	@$(CXX) $^ -o $@ $(PKG_CONFIG_LIBS)
+	@$(CXX) $^ -o $@ $(PKG_CONFIG_LIBS) $(ex_final_link_flags)
 
 # 下面是各个 OBJ 变量 中的 o 文件的生成规则
 $(OBJ):obj/%.o:%.cpp
