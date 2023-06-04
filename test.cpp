@@ -33,14 +33,17 @@ extern "C"
 	}
 }
 
+void hello(void);
+
 int main(void)
 {
-	fstream fs{"./temp.txt", ios_base::out | ios_base::in | ios_base::trunc};
-	fs << "黄锦灿" << endl;
-	fs.flush();
-	fs.seekg(0);
-	string read_str;
-	fs >> read_str;
-	cout << read_str << endl;
+	// fstream fs{"./temp.txt", ios_base::out | ios_base::in | ios_base::trunc};
+	// fs << "黄锦灿" << endl;
+	// fs.flush();
+	// fs.seekg(0);
+	// string read_str;
+	// fs >> read_str;
+	// cout << read_str << endl;
+	hello();
 	return 0;
 }
