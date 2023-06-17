@@ -24,13 +24,15 @@ using std::string;
 int main(void)
 {
 	FFmpeg::AVFormatContext formatContext;
-	if (avformat_open_input(formatContext, "./re.ts", nullptr, nullptr))
+	if (formatContext.open_input("./re.ts", nullptr, nullptr))
 	{
 		throw "打开输入失败";
 	}
-	if (avformat_find_stream_info(formatContext, nullptr) >= 0)
+	if (formatContext.find_stream_info(nullptr) >= 0)
 	{
 		cout << formatContext()->nb_streams << endl;
 	}
+	cout << formatContext.get_duration_as_formatted_time_string() << endl;
+	cout << formatContext()->streams[0]->index << endl;
 	return 0;
 }

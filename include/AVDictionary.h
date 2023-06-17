@@ -21,6 +21,7 @@
  */
 
 #pragma once
+#include <FFmpegEnum.h>
 extern "C"
 {
 #define __STDC_CONSTANT_MACROS
@@ -30,31 +31,6 @@ extern "C"
 
 namespace FFmpeg
 {
-	/**
-	 * @brief 字典操作的枚举类型
-	 *
-	 */
-	enum AVDictionaryFlag
-	{
-		none = 0,
-
-		match_case = 1, /**< Only get an entry with exact-case key match. Only relevant in av_dict_get(). */
-
-		ignore_suffix = 2,	 /**< Return first entry in a dictionary whose first part corresponds to the search key,
-												ignoring the suffix of the found key string. Only relevant in av_dict_get(). */
-		dont_strdup_key = 4, /**< Take ownership of a key that's been
-												  allocated with av_malloc() or another memory allocation function. */
-		dont_strdup_val = 8, /**< Take ownership of a value that's been
-												  allocated with av_malloc() or another memory allocation function. */
-		dont_overwrite = 16, /**< Don't overwrite existing entries. */
-
-		append = 32,  /**< If the entry already exists, append to it.  Note that no
-										delimiter is added, the strings are simply concatenated. */
-		multikey = 64 /**< Allow to store several equal keys in the dictionary */
-	};
-
-	typedef ::AVDictionaryEntry AVDictionaryEntry;
-
 	/**
 	 * @brief 对 ::AVDictionary 的封装
 	 * 本类对象实例化后，不会立刻创建一个 ::AVDictionary 对象，要调用
