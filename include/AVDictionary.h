@@ -1,13 +1,30 @@
+/**
+ * @file AVDictionary.h
+ * @author your name (you@domain.com)
+ * @brief
+ * @version 0.1
+ * @date 2023-06-17
+ *
+ * @copyright Copyright (c) 2023
+ *
+ * @code {.cpp} 示例
+
+	FFmpeg::AVDictionary dic;
+	dic.av_dict_set("name", "hjc");
+	cout << dic.av_dict_count() << endl;
+	auto entry = dic.av_dict_get("name", nullptr);
+	cout << entry->key << endl;
+	cout << entry->value << endl;
+
+ * @endcode
+ *
+ */
+
 #pragma once
 extern "C"
 {
 #define __STDC_CONSTANT_MACROS
-#include <libavutil/log.h>
-#include <libavutil/error.h>
 #include <libavutil/avutil.h>
-#include <libavformat/avio.h>
-#include <libavformat/avformat.h>
-#include <libavcodec/avcodec.h>
 #include <libavutil/opt.h>
 }
 
@@ -38,6 +55,14 @@ namespace FFmpeg
 
 	typedef ::AVDictionaryEntry AVDictionaryEntry;
 
+	/**
+	 * @brief 对 ::AVDictionary 的封装
+	 * 本类对象实例化后，不会立刻创建一个 ::AVDictionary 对象，要调用
+	 * av_dict_set 方法之后才会创建。本类对象销毁的时候会自动在析构函数中调用 ffmpeg
+	 * 的 API 来清理字典占用的资源，当然，也可以手动调用本类的 av_dict_free 方法
+	 * 来清理资源。清理完了之后，再次调用 av_dict_set 方法会创建一个新的 ::AVDictionary
+	 * 对象
+	 */
 	class AVDictionary
 	{
 	public:
