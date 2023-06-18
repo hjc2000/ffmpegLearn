@@ -31,8 +31,8 @@ int main(void)
 	if (formatContext.find_stream_info(nullptr) >= 0)
 	{
 		cout << formatContext()->nb_streams << endl;
+		cout << formatContext()->bit_rate << endl;
 	}
 	cout << formatContext.get_duration_as_formatted_time_string() << endl;
-	cout << formatContext()->streams[0]->index << endl;
 	return 0;
 }
