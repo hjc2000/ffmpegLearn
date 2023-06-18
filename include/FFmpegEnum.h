@@ -15,6 +15,7 @@ extern "C"
 #define __STDC_CONSTANT_MACROS
 #include <libavformat/avformat.h>
 }
+#include <string>
 
 namespace FFmpeg
 {
@@ -44,3 +45,5 @@ namespace FFmpeg
 		multikey = 64 /**< Allow to store several equal keys in the dictionary */
 	};
 }
+
+std::string &operator<<(std::string &str, FFmpeg::AVMediaType type);

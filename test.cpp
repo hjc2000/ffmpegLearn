@@ -1,5 +1,7 @@
 ﻿#include <AVDictionary.h>
 #include <AVFormatContext.h>
+#include <AVError.h>
+#include <FFmpegEnum.h>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -34,5 +36,8 @@ int main(void)
 		cout << formatContext()->bit_rate << endl;
 	}
 	cout << formatContext.get_duration_as_formatted_time_string() << endl;
+	std::string err_str;
+	err_str << FFmpeg::AVMediaType::AVMEDIA_TYPE_AUDIO;
+	cout << err_str << endl;
 	return 0;
 }

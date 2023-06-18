@@ -4,17 +4,27 @@ template <class T>
 class Wraper
 {
 public:
-	virtual T *operator()(void)
+	void operator=(T *pWrapedObj)
+	{
+		m_pWrapedObj = pWrapedObj;
+	}
+
+	void operator=(T &pWrapedObj)
+	{
+		m_pWrapedObj = &pWrapedObj;
+	}
+
+	T *operator()(void)
 	{
 		return m_pWrapedObj;
 	}
 
-	virtual operator T **()
+	operator T **()
 	{
 		return &m_pWrapedObj;
 	}
 
-	virtual operator T *()
+	operator T *()
 	{
 		return m_pWrapedObj;
 	}
