@@ -27,20 +27,13 @@ int main(void)
 {
 	try
 	{
-		int err_code;
 		FFmpeg::AVFormatContext formatContext;
-		err_code = formatContext.open_input("./re.ts", nullptr, nullptr);
-		if (err_code)
-			throw err_code;
-		err_code = formatContext.find_stream_info(nullptr);
-		if (err_code < 0)
-			throw err_code;
-		cout << formatContext()->nb_streams << endl;
-		cout << formatContext()->bit_rate << endl;
-		cout << formatContext.get_duration_as_formatted_time_string() << endl;
-		std::string media_type_str;
-		media_type_str << FFmpeg::AVMediaType::AVMEDIA_TYPE_AUDIO;
-		cout << media_type_str << endl;
+		formatContext.open_input("./re.ts");
+		formatContext.find_stream_info();
+		int stream_index = formatContext.find_best_stream(FFmpeg::AVMediaType::AVMEDIA_TYPE_AUDIO);
+		cout << stream_index << endl;
+		stream_index = formatContext.find_best_stream(FFmpeg::AVMediaType::AVMEDIA_TYPE_VIDEO);
+		cout << stream_index << endl;
 		return 0;
 	}
 	catch (int err_code)

@@ -46,4 +46,5 @@ namespace FFmpeg
 	};
 }
 
-std::string &operator<<(std::string &str, FFmpeg::AVMediaType type);
+std::string &operator<<(std::string &str, FFmpeg::AVMediaType const type);
+void operator>>(std::string const &str, FFmpeg::AVMediaType &type);

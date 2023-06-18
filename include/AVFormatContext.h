@@ -34,9 +34,11 @@ namespace FFmpeg
 
 #pragma region ffmpeg 中针对 AVFormatContext 的操作函数
 	public:
-		inline int open_input(const char *url, const ::AVInputFormat *fmt, ::AVDictionary **options)
+		inline void open_input(const char *url, const ::AVInputFormat *fmt = nullptr, ::AVDictionary **options = nullptr)
 		{
-			return ::avformat_open_input(&m_pWrapedObj, url, fmt, options);
+			int result = ::avformat_open_input(&m_pWrapedObj, url, fmt, options);
+			if (result < 0)
+				throw result;
 		}
 
 		void close_input()
@@ -44,9 +46,11 @@ namespace FFmpeg
 			::avformat_close_input(&m_pWrapedObj);
 		}
 
-		inline int find_stream_info(::AVDictionary **options)
+		inline void find_stream_info(::AVDictionary **options = nullptr)
 		{
-			return ::avformat_find_stream_info(m_pWrapedObj, options);
+			int result = ::avformat_find_stream_info(m_pWrapedObj, options);
+			if (result < 0)
+				throw result;
 		}
 
 		/**
@@ -60,12 +64,16 @@ namespace FFmpeg
 		 * @return int
 		 */
 		int find_best_stream(AVMediaType type,
-							 int wanted_stream_nb,
-							 int related_stream,
-							 const ::AVCodec **decoder_ret,
-							 int flags)
+							 int wanted_stream_nb = -1,
+							 int related_stream = -1,
+							 const ::AVCodec **decoder_ret = nullptr,
+							 int flags = 0)
 		{
-			return ::av_find_best_stream(m_pWrapedObj, type, wanted_stream_nb, related_stream, decoder_ret, flags);
+			int result = ::av_find_best_stream(m_pWrapedObj, type, wanted_stream_nb, related_stream, decoder_ret, flags);
+			if (result < 0)
+				throw result;
+			else
+				return result;
 		}
 #pragma endregion
 
