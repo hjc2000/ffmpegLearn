@@ -1,15 +1,14 @@
 #pragma once
-
 #include <Wraper.h>
 #include <FFmpegEnum.h>
-#include <string>
-#include <sstream>
 extern "C"
 {
 #define __STDC_CONSTANT_MACROS
 #include <libavformat/avio.h>
 #include <libavformat/avformat.h>
 }
+#include <string>
+#include <sstream>
 
 namespace FFmpeg
 {
@@ -24,6 +23,10 @@ namespace FFmpeg
 		AVFormatContext(::AVFormatContext *pFormatContext)
 		{
 			m_pWrapedObj = pFormatContext;
+		}
+		AVFormatContext(::AVFormatContext &ref_FormatContext)
+		{
+			m_pWrapedObj = &ref_FormatContext;
 		}
 		~AVFormatContext()
 		{

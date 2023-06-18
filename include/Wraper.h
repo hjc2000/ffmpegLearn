@@ -9,9 +9,9 @@ public:
 		m_pWrapedObj = pWrapedObj;
 	}
 
-	void operator=(T &pWrapedObj)
+	void operator=(T &ref_WrapedObj)
 	{
-		m_pWrapedObj = &pWrapedObj;
+		m_pWrapedObj = &ref_WrapedObj;
 	}
 
 	T *operator()(void)

@@ -2,9 +2,7 @@
 #include <AVFormatContext.h>
 #include <AVError.h>
 #include <FFmpegEnum.h>
-#include <iostream>
-#include <fstream>
-#include <string>
+#include <AVStream.h>
 extern "C"
 {
 #define __STDC_CONSTANT_MACROS
@@ -16,7 +14,9 @@ extern "C"
 #include <libavcodec/avcodec.h>
 #include <libavutil/opt.h>
 }
-
+#include <iostream>
+#include <fstream>
+#include <string>
 using std::cout;
 using std::endl;
 using std::fstream;
@@ -34,6 +34,8 @@ int main(void)
 		cout << stream_index << endl;
 		stream_index = formatContext.find_best_stream(FFmpeg::AVMediaType::AVMEDIA_TYPE_VIDEO);
 		cout << stream_index << endl;
+		FFmpeg::AVStream stream{formatContext()->streams[stream_index]};
+		cout << "索引号：" << stream()->index << endl;
 		return 0;
 	}
 	catch (int err_code)
