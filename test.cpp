@@ -25,19 +25,30 @@ using std::string;
 
 int main(void)
 {
-	FFmpeg::AVFormatContext formatContext;
-	if (formatContext.open_input("./re.ts", nullptr, nullptr))
+	try
 	{
-		throw "打开输入失败";
-	}
-	if (formatContext.find_stream_info(nullptr) >= 0)
-	{
+		int err_code;
+		FFmpeg::AVFormatContext formatContext;
+		err_code = formatContext.open_input("./re.ts", nullptr, nullptr);
+		if (err_code)
+			throw err_code;
+		err_code = formatContext.find_stream_info(nullptr);
+		if (err_code < 0)
+			throw err_code;
 		cout << formatContext()->nb_streams << endl;
 		cout << formatContext()->bit_rate << endl;
+		cout << formatContext.get_duration_as_formatted_time_string() << endl;
+		std::string media_type_str;
+		media_type_str << FFmpeg::AVMediaType::AVMEDIA_TYPE_AUDIO;
+		cout << media_type_str << endl;
+		return 0;
 	}
-	cout << formatContext.get_duration_as_formatted_time_string() << endl;
-	std::string err_str;
-	err_str << FFmpeg::AVMediaType::AVMEDIA_TYPE_AUDIO;
-	cout << err_str << endl;
-	return 0;
+	catch (int err_code)
+	{
+		std::cerr << FFmpeg::error_code_to_str(err_code) << endl;
+	}
+	catch (const char *str)
+	{
+		std::cerr << str << endl;
+	}
 }
