@@ -7,13 +7,14 @@
  *
  * @copyright Copyright (c) 2023
  *
- * typedef 一些 ffmpeg 中的枚举类型，或者将 ffmpeg 中的宏定义转化为枚举类型
+ * typedef 一些 ffmpeg 中的数据类型，或者将 ffmpeg 中的宏定义转化为枚举类型
  */
 #pragma once
 extern "C"
 {
 #define __STDC_CONSTANT_MACROS
 #include <libavformat/avformat.h>
+#include <libavutil/avutil.h>
 }
 #include <string>
 
@@ -44,7 +45,19 @@ namespace FFmpeg
 										delimiter is added, the strings are simply concatenated. */
 		multikey = 64 /**< Allow to store several equal keys in the dictionary */
 	};
+
+	typedef ::AVRational AVRational;
+	typedef ::AVCodecParameters AVCodecParameters;
 }
 
+#pragma region AVMediaType 的相关运算符重载
 std::string &operator<<(std::string &str, FFmpeg::AVMediaType const type);
+std::ostream &operator<<(std::ostream &ostream, FFmpeg::AVMediaType const type);
 void operator>>(std::string const &str, FFmpeg::AVMediaType &type);
+#pragma endregion AVMediaType 的相关运算符重载
+
+#pragma region AVRational 的相关运算符重载
+std::string &operator<<(std::string &str, FFmpeg::AVRational const rational);
+std::ostream &operator<<(std::ostream &ostream, FFmpeg::AVRational const rational);
+double operator*(int64_t const duration, FFmpeg::AVRational const rational);
+#pragma endregion AVRational 的相关运算符重载

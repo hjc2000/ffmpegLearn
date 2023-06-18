@@ -1,5 +1,5 @@
 #include <Wraper.h>
-#include <FFmpegEnum.h>
+#include <AVUtil.h>
 extern "C"
 {
 #define __STDC_CONSTANT_MACROS

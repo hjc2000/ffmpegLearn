@@ -1,6 +1,7 @@
 #pragma once
 #include <Wraper.h>
-#include <FFmpegEnum.h>
+#include <AVUtil.h>
+#include <AVPacket.h>
 extern "C"
 {
 #define __STDC_CONSTANT_MACROS
@@ -77,6 +78,13 @@ namespace FFmpeg
 				throw result;
 			else
 				return result;
+		}
+
+		void read_frame(FFmpeg::AVPacket &ref_packet)
+		{
+			int result = ::av_read_frame(m_pWrapedObj, ref_packet);
+			if (result < 0)
+				throw result;
 		}
 #pragma endregion
 
