@@ -15,6 +15,8 @@ extern "C"
 #define __STDC_CONSTANT_MACROS
 #include <libavformat/avformat.h>
 #include <libavutil/avutil.h>
+#include <libavutil/timestamp.h>
+#include <libavcodec/avcodec.h>
 }
 #include <string>
 
@@ -48,6 +50,7 @@ namespace FFmpeg
 
 	typedef ::AVRational AVRational;
 	typedef ::AVCodecParameters AVCodecParameters;
+	typedef ::AVCodecID AVCodecID;
 }
 
 #pragma region AVMediaType 的相关运算符重载

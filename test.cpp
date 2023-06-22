@@ -28,32 +28,19 @@ int main(void)
 {
 	try
 	{
-		FFmpeg::AVFormatContext formatContext;
-		formatContext.open_input("./re.ts");
-		formatContext.find_stream_info();
-		int stream_index = formatContext.find_best_stream(FFmpeg::AVMediaType::AVMEDIA_TYPE_AUDIO);
-		cout << stream_index << endl;
-		stream_index = formatContext.find_best_stream(FFmpeg::AVMediaType::AVMEDIA_TYPE_VIDEO);
-		cout << stream_index << endl;
-		FFmpeg::AVStream stream{formatContext()->streams[stream_index]};
-		cout << "索引号：" << stream()->index << endl;
-		cout << stream()->avg_frame_rate << endl;
-		cout << "宽：" << stream()->codecpar->width << "高：" << stream()->codecpar->height << endl;
-		cout << stream()->duration * stream()->time_base << endl;
-		uint64_t count = 0;
-		try
+		FFmpeg::AVFormatContext iformat_context;
+		FFmpeg::AVFormatContext oformat_context;
+		iformat_context.open_input("./re.ts");
+		oformat_context.alloc_output_context2("./out.mp4");
+		iformat_context.find_stream_info();
+		// 输入文件的流数量
+		int intput_stream_num = iformat_context()->nb_streams;
+		int *stream_map = new int[intput_stream_num];
+		// 遍历每一个输入流，创建 stream_map ，并为输出文件创建流
+		for (int i = 0; i < intput_stream_num; i++)
 		{
-			while (1)
-			{
-				count++;
-				FFmpeg::AVPacket packet;
-				formatContext.read_frame(packet);
-			}
 		}
-		catch (int err_code)
-		{
-			cout << "count=" << count << endl;
-		}
+		delete stream_map;
 		return 0;
 	}
 	catch (int err_code)
