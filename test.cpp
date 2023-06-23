@@ -23,24 +23,42 @@ using std::endl;
 using std::fstream;
 using std::ios_base;
 using std::string;
+#include <memory>
+using std::shared_ptr;
+
+class Base
+{
+public:
+	Base()
+	{
+		cout << "Base 无参构造函数" << endl;
+	}
+	virtual ~Base()
+	{
+		cout << "Base 类析构函数" << endl;
+	}
+};
+
+class Test : public Base
+{
+public:
+	Test()
+	{
+		cout << "Test 无参构造函数" << endl;
+	}
+	~Test()
+	{
+		cout << "Test 类析构函数" << endl;
+	}
+};
 
 int main(void)
 {
 	try
 	{
-		FFmpeg::AVFormatContext iformat_context;
-		FFmpeg::AVFormatContext oformat_context;
-		iformat_context.open_input("./re.ts");
-		oformat_context.alloc_output_context2("./out.mp4");
-		iformat_context.find_stream_info();
-		// 输入文件的流数量
-		int intput_stream_num = iformat_context()->nb_streams;
-		int *stream_map = new int[intput_stream_num];
-		// 遍历每一个输入流，创建 stream_map ，并为输出文件创建流
-		for (int i = 0; i < intput_stream_num; i++)
-		{
-		}
-		delete stream_map;
+		shared_ptr<int> spi = shared_ptr<int>{new int{0}};
+		spi = spi;
+		cout << spi.use_count() << endl;
 		return 0;
 	}
 	catch (int err_code)
