@@ -49,6 +49,7 @@ typedef struct FilteringContext
 	AVPacket *enc_pkt;
 	AVFrame *filtered_frame;
 } FilteringContext;
+
 static FilteringContext *filter_ctx;
 
 typedef struct StreamContext

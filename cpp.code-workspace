@@ -80,6 +80,5 @@
 		},
 		"editor.minimap.showSlider": "always",
 		"editor.minimap.size": "fill",
-		"editor.fontSize": 22
 	}
 }
